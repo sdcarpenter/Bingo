@@ -12,14 +12,18 @@ namespace Bingo.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BingoContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BingoContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
+            _context.Cards.Add(new BingoCard() {DateCreated = DateTime.Now});
+            _context.SaveChanges();
             return View();
         }
 

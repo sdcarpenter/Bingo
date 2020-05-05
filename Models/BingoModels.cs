@@ -15,7 +15,25 @@ namespace Bingo.Models
         public virtual ICollection<BingoNumber> Numbers { get; set; }
 
         [NotMapped]
-        public IOrderedEnumerable<BingoNumber> OrderedNumbers => Numbers.OrderBy(c => c.Order);
+        public List<string> OrderedNumbers
+        {
+            get
+            {
+                if (_orderedNumbers != null)
+                    return _orderedNumbers;
+
+                _orderedNumbers = Numbers
+                    .OrderBy(c => c.Order)
+                    .Select(c => c.Number.ToString())
+                    .ToList();
+
+                _orderedNumbers.Insert(12, "FREE");
+
+                return _orderedNumbers;
+            }
+        }
+
+        private List<string> _orderedNumbers;
     }
 
     public class BingoNumber

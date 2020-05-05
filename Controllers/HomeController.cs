@@ -40,11 +40,6 @@ namespace Bingo.Controllers
             return RedirectToAction("Show", "Cards", new { id = card.CardNumber});
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

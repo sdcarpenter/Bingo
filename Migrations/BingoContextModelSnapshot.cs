@@ -42,12 +42,10 @@ namespace Bingo.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CardNumber1")
+                    b.Property<int>("Order")
                         .HasColumnType("integer");
 
                     b.HasKey("CardNumber", "Number");
-
-                    b.HasIndex("CardNumber1");
 
                     b.ToTable("Numbers");
                 });
@@ -56,7 +54,9 @@ namespace Bingo.Migrations
                 {
                     b.HasOne("Bingo.Models.BingoCard", "Card")
                         .WithMany("Numbers")
-                        .HasForeignKey("CardNumber1");
+                        .HasForeignKey("CardNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Bingo.Migrations
 {
-    public partial class Inital : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,23 +27,18 @@ namespace Bingo.Migrations
                 {
                     CardNumber = table.Column<int>(nullable: false),
                     Number = table.Column<int>(nullable: false),
-                    CardNumber1 = table.Column<int>(nullable: true)
+                    Order = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Numbers", x => new { x.CardNumber, x.Number });
                     table.ForeignKey(
-                        name: "FK_Numbers_Cards_CardNumber1",
-                        column: x => x.CardNumber1,
+                        name: "FK_Numbers_Cards_CardNumber",
+                        column: x => x.CardNumber,
                         principalTable: "Cards",
                         principalColumn: "CardNumber",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Numbers_CardNumber1",
-                table: "Numbers",
-                column: "CardNumber1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

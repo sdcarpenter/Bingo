@@ -22,9 +22,22 @@ namespace Bingo.Controllers
 
         public IActionResult Index()
         {
-            _context.Cards.Add(new BingoCard() {DateCreated = DateTime.Now});
+            var card = new BingoCard {
+                DateCreated = DateTime.Now,
+                Numbers = Enumerable.Range(1, 99)
+                    .Shuffle()
+                    .Select((c, i) => new BingoNumber {
+                        Number = c,
+                        Order = i
+                    })
+                    .Take(24)
+                    .ToArray()
+            };
+
+            _context.Cards.Add(card);
             _context.SaveChanges();
-            return View();
+
+            return RedirectToAction("Show", "Cards", new { id = card.CardNumber});
         }
 
         public IActionResult Privacy()

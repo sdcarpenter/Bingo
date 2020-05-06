@@ -43,4 +43,21 @@ namespace Bingo.Models
         public int Order { get; set; }
         public virtual BingoCard Card { get; set; }
     }
+
+    public class BingoGame
+    {
+        public int GameId { get; set; }
+        public DateTime DateCreated { get; set; }
+        public virtual ICollection<BingoGameNumber> Numbers { get; set; }
+    }
+
+    public class BingoGameNumber
+    {
+        public int GameNumber { get; set; }
+        public int Number { get; set; }
+        public int Order { get; set; }
+        public virtual BingoGame Game { get; set; }
+    }
+
+
 }

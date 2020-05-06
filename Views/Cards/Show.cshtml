@@ -17,7 +17,10 @@
     }
     </style>
 
-<h1>Card number: @(Model.CardNumber)</h1>
+<h1 style="float: left; padding-top: 15px; padding-bottom: 15px;">Card number: @(Model.CardNumber)</h1>
+<h1 style="float: right; padding-top: 15px; padding-bottom: 15px;">
+    <a target="_blank" rel="noopener noreferrer" asp-action="index" asp-controller="home">New Card</a>
+</h1>
 <div>
     <table style="width: 100%; border: 2px solid black">
         
@@ -26,9 +29,14 @@
             <tr>
                 @foreach (var number in row)
                 {
-                    <td>@(number)</td>
+                    <td class="@(number == "FREE" ? "selected" : "")" id="@(number == "FREE" ? "freeSpace" : "")">
+                        <a class="cell" href="#">@(number)</a>
+                    </td>
                 }
             </tr>
         }
     </table>
 </div>
+<h1 id="printLink" style="float: right; padding-top: 15px; padding-bottom: 15px;">
+    <a href="javascript:printCard()">Print</a>
+</h1>

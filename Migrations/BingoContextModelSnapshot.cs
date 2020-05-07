@@ -36,15 +36,17 @@ namespace Bingo.Migrations
 
             modelBuilder.Entity("Bingo.Models.BingoGame", b =>
                 {
-                    b.Property<int>("GameId")
+                    b.Property<int>("GameNumber")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp without time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
-                    b.HasKey("GameId");
+                    b.HasKey("GameNumber");
 
                     b.ToTable("Games");
                 });
@@ -57,17 +59,12 @@ namespace Bingo.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("GameId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("DrawTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("GameNumber", "Number");
 
-                    b.HasIndex("GameId");
-
-                    b.ToTable("GameNumber");
+                    b.ToTable("GameNumbers");
                 });
 
             modelBuilder.Entity("Bingo.Models.BingoNumber", b =>
@@ -90,7 +87,9 @@ namespace Bingo.Migrations
                 {
                     b.HasOne("Bingo.Models.BingoGame", "Game")
                         .WithMany("Numbers")
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("GameNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Bingo.Models.BingoNumber", b =>

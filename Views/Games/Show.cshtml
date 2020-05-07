@@ -1,0 +1,17 @@
+﻿@model Bingo.Models.BingoGame
+
+@{
+    ViewData["Title"] = "Game";
+}
+
+<h1 style="float: left; padding-top: 15px; padding-bottom: 15px;">Game Number: @(Model.GameNumber)</h1>
+@if (Model.Numbers != null)
+{
+    foreach (var number in Model.Numbers.OrderBy(c => c.DrawTime))
+    {
+        <div>@number.Number</div>
+    }
+}
+<form method="post" asp-action="DrawNumber" asp-route-id="@Model.GameNumber">
+    <input type="submit" value="Draw Number"/>
+</form>

@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Bingo.Migrations
 {
     [DbContext(typeof(BingoContext))]
-    [Migration("20200505155214_Initial")]
+    [Migration("20200507042615_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,39 @@ namespace Bingo.Migrations
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("Bingo.Models.BingoGame", b =>
+                {
+                    b.Property<int>("GameNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.HasKey("GameNumber");
+
+                    b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Bingo.Models.BingoGameNumber", b =>
+                {
+                    b.Property<int>("GameNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DrawTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("GameNumber", "Number");
+
+                    b.ToTable("GameNumbers");
+                });
+
             modelBuilder.Entity("Bingo.Models.BingoNumber", b =>
                 {
                     b.Property<int>("CardNumber")
@@ -50,6 +83,15 @@ namespace Bingo.Migrations
                     b.HasKey("CardNumber", "Number");
 
                     b.ToTable("Numbers");
+                });
+
+            modelBuilder.Entity("Bingo.Models.BingoGameNumber", b =>
+                {
+                    b.HasOne("Bingo.Models.BingoGame", "Game")
+                        .WithMany("Numbers")
+                        .HasForeignKey("GameNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Bingo.Models.BingoNumber", b =>

@@ -33,11 +33,16 @@ namespace Bingo
                 .WithMany(c => c.Numbers);
 
             modelBuilder.Entity<BingoGame>()
-                .HasKey(c => c.GameId);
+                .HasKey(c => c.GameNumber);
 
             modelBuilder.Entity<BingoGame>()
-                .Property(c => c.GameId)
+                .Property(c => c.GameNumber)
                 .UseIdentityColumn();
+
+            modelBuilder.Entity<BingoGame>()
+                .Property(c => c.DateCreated)
+                .HasDefaultValueSql("NOW()")
+                .ValueGeneratedOnAdd();
         }
 
         public DbSet<BingoCard> Cards { get; set; }
@@ -46,6 +51,6 @@ namespace Bingo
 
         public DbSet<BingoGame> Games { get; set; }
 
-        public DbSet<BingoGameNumber> GameNumber { get; set; }
+        public DbSet<BingoGameNumber> GameNumbers { get; set; }
     }
 }

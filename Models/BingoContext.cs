@@ -31,6 +31,11 @@ namespace Bingo
             modelBuilder.Entity<BingoGameNumber>()
                 .HasOne(c => c.Game)
                 .WithMany(c => c.Numbers);
+            
+            modelBuilder.Entity<BingoGameNumber>()
+                .Property(c => c.DrawTime)
+                .HasDefaultValueSql("NOW()")
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<BingoGame>()
                 .HasKey(c => c.GameNumber);

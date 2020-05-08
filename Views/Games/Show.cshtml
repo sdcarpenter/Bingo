@@ -4,14 +4,25 @@
     ViewData["Title"] = "Game";
 }
 
-<h1 style="float: left; padding-top: 15px; padding-bottom: 15px;">Game Number: @(Model.GameNumber)</h1>
-@if (Model.Numbers != null)
-{
-    foreach (var number in Model.Numbers.OrderBy(c => c.DrawTime))
+<div style="height:50px">
+    <h1 style="float: left; padding-top: 15px; padding-bottom: 15px;">Game Number: @(Model.GameNumber)</h1>
+    <h1 style="float: right; padding-top: 15px; padding-bottom: 15px;">
+        <a target="_blank" rel="noopener noreferrer" asp-action="index" asp-controller="game">New Game</a>
+    </h1>
+</div>
+
+<div style="padding-top: 40px">
+    @if (Model.Numbers != null)
     {
-        <div>@number.Number</div>
+        foreach (var number in Model.Numbers.OrderBy(c => c.DrawTime))
+        {
+            <span style="border: 3px solid black; font-size: 42pt; padding: 8px; margin-top: 15px; display: inline-block">@number.Number</span>
+        }
     }
-}
-<form method="post" asp-action="DrawNumber" asp-route-id="@Model.GameNumber">
-    <input type="submit" value="Draw Number"/>
-</form>
+</div>
+
+<div style="display: block; width: 100%; margin-top: 20px;">
+    <form method="post" asp-action="DrawNumber" asp-route-id="@Model.GameNumber">
+        <input type="submit" value="Draw Number" />
+    </form>
+</div>

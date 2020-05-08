@@ -5,13 +5,14 @@
 $(".cell").click(function(elem) {
     var self = $(this).parent();
     self.toggleClass("selected");
-})
+});
 
 printCard = function() {
     $('#printLink').hide();
+    $('#freeSpace').toggleClass("selected");
     window.print();
     setTimeout(function() {
-            $('#printLink').show();
-        },
-        500);
+        $('#printLink').show();
+        $('#freeSpace').toggleClass("selected");
+    }, 500);
 }

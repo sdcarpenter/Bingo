@@ -27,6 +27,8 @@ namespace Bingo
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
 
+            Console.WriteLine("hi\n\n\n\n");
+            Console.WriteLine("Connection: " + Configuration.GetConnectionString("BingoContext"));
             services.AddDbContext<BingoContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("BingoContext")));
         }

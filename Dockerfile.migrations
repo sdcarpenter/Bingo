@@ -1,0 +1,18 @@
+
+# docker build -f Dockerfile.migrations -t bingo-migrations .
+# docker run --env-file .env bingo-migrations
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copy everything else and build
+COPY . ./
+
+RUN dotnet tool install --global dotnet-ef
+
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
+ENTRYPOINT ["dotnet", "ef", "database", "update"]

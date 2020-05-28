@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes: 
-      - bingo-dbdata:/var/lib/postresql/data
+      - bingo-dbdata:/var/lib/postgresql/data
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - '6000:5432'

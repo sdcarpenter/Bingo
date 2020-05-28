@@ -12,7 +12,7 @@ services:
     ports:
       - '6000:5432'
     networks:
-      - nginxconfig_app-network
+      - app-network
 
   bingo-web:
     depends_on: 
@@ -24,11 +24,11 @@ services:
     ports:
       - '5000:80'
     networks:
-      - nginxconfig_app-network
+      - app-network
 
 volumes:
   bingo-dbdata:
 
 networks:
-  nginxconfig_app-network:
-    external: true 
+  app-network:
+    driver: bridge

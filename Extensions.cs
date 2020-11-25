@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Bingo
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Random number generator
+        /// </summary>
+        private static readonly Random _Random = new Random();
+
+        /// <summary>
+        /// Lock object for random number generator
+        /// </summary>
+        private static object _Lock = new object();
+        
         /// <summary>
         /// Randomize an IEnumerable
         /// </summary>
@@ -17,8 +26,11 @@ namespace Bingo
         /// <returns>A randomized array</returns>
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> data)
         {
-            var random = new Random();
-            return data.OrderBy(c => random.Next());
+            int randomNumber;
+
+            lock (_Lock)
+                randomNumber = _Random.Next();
+            return data.OrderBy(c => randomNumber);
         }
 
         /// <summary>Partitions an array into smaller collections of partitionSize.  The last

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Bingo.Models;
@@ -22,15 +20,26 @@ namespace Bingo.Controllers
 
         public IActionResult Index()
         {
+            // Make the Bingo grid
+            var grid = Enumerable.Range(0, 5)
+                .Select((c, i) => Enumerable.Range(0, 19).ToArray().Select(d => d + i * 20 + 1).Shuffle().Take(5).ToArray())
+                .ToArray();
+            
+            // Flatten the grid for storage in the DB
+            var flattenedGrid = Enumerable.Range(0, 5).SelectMany(c => Enumerable.Range(0, 5).Select(d => grid[d][c]))
+                .ToList();
+
+            // Remove the free space
+            flattenedGrid.RemoveAt(12);
+            
+            // Generate the card
             var card = new BingoCard {
                 DateCreated = DateTime.Now,
-                Numbers = Enumerable.Range(1, 99)
-                    .Shuffle()
+                Numbers = flattenedGrid
                     .Select((c, i) => new BingoNumber {
                         Number = c,
                         Order = i
                     })
-                    .Take(24)
                     .ToArray()
             };
 

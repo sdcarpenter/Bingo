@@ -24,13 +24,22 @@ namespace Bingo
         /// <remarks>Note this isn't terribly efficient,
         /// a shuffle in place would be faster.</remarks>
         /// <returns>A randomized array</returns>
-        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> data)
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> data) => data.OrderBy(c => GetNextRandomInt());
+
+        /// <summary>
+        /// Get next integer from the static generator
+        ///
+        /// NOTE: Thread safe
+        /// </summary>
+        /// <returns>Next random integer</returns>
+        private static int GetNextRandomInt()
         {
             int randomNumber;
 
             lock (_Lock)
                 randomNumber = _Random.Next();
-            return data.OrderBy(c => randomNumber);
+
+            return randomNumber;
         }
 
         /// <summary>Partitions an array into smaller collections of partitionSize.  The last

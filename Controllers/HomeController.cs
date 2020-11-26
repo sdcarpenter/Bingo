@@ -22,7 +22,7 @@ namespace Bingo.Controllers
         {
             // Make the Bingo grid
             var grid = Enumerable.Range(0, 5)
-                .Select((c, i) => Enumerable.Range(0, 19).ToArray().Select(d => d + i * 20 + 1).Shuffle().Take(5).ToArray())
+                .Select((c, i) => Enumerable.Range(0, 19).Select(d => d + i * 20 + 1).Shuffle().ToArray().Take(5).ToArray())
                 .ToArray();
             
             // Flatten the grid for storage in the DB

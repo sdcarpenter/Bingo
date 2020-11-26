@@ -19,6 +19,9 @@
         height: 100%;
         text-decoration: none;
     }
+    td.head {
+        color: red
+    }
     </style>
 
 <h1 style="float: left; padding-top: 15px; padding-bottom: 15px;">Card number: @(Model.CardNumber)</h1>
@@ -26,8 +29,36 @@
     <a target="_blank" rel="noopener noreferrer" asp-action="index" asp-controller="home">New Card</a>
 </h1>
 <div>
+    <table style="border: 0">
+        <tr>
+            <td style="border: none">
+                <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+                    <text text-anchor="middle" font-size="42" dy=".3em">B</text>
+                </svg>
+            </td>
+            <td style="border: none">
+                <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+                    <text text-anchor="middle" font-size="42" dy=".3em">I</text>
+                </svg>
+            </td>
+            <td style="border: none">
+                <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+                    <text text-anchor="middle" font-size="42" dy=".3em">N</text>
+                </svg>
+            </td>
+            <td style="border: none">
+                <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+                    <text text-anchor="middle" font-size="42" dy=".3em">G</text>
+                </svg>
+            </td>
+            <td style="border: none">
+                <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+                    <text text-anchor="middle" font-size="42" dy=".3em">O</text>
+                </svg>
+            </td>
+        </tr>
+    </table>
     <table style="width: 100%; border: 2px solid black">
-        
         @foreach (var row in Model.OrderedNumbers.Partition(5))
         {
             <tr>
@@ -36,7 +67,7 @@
                     <td class="@(number == "FREE" ? "selected" : "")" id="@(number == "FREE" ? "freeSpace" : "")">
                         <a class="cell" href="#">
                             <svg viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
-                                <text  text-anchor="middle" font-size="42" dy=".3em">@(number)</text>
+                                <text text-anchor="middle" font-size="42" dy=".3em">@(number)</text>
                             </svg>
                         </a>
                     </td>

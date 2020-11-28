@@ -70,5 +70,29 @@ namespace Bingo
             if (currentPartition.Any())
                 yield return currentPartition;
         }
+
+        /// <summary>
+        /// Get the letter for the drawn number
+        /// </summary>
+        /// <param name="number">Number drawnb</param>
+        /// <returns>Corresponding letter</returns>
+        public static string GetBingoNumber(this int number)
+        {
+            switch (number)
+            {
+                case { } n when (n >=1 && n < 20):
+                    return "B";
+                case { } n when (n >= 20 && n < 40):
+                    return "I";
+                case { } n when (n >= 40 && n < 60):
+                    return "N";
+                case { } n when (n >= 60 && n < 80):
+                    return "G";
+                case { } n when (n >= 80 && n < 100):
+                    return "O";
+                default:
+                    throw new ArgumentException();
+            }
+        }
     }
 }

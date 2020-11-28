@@ -25,6 +25,20 @@ services:
       - '5000:80'
     networks:
       - app-network
+  
+  bingo-web-migrations:
+    depends_on: 
+      - bingo-db
+    build:
+      context: .
+      dockerfile: Dockerfile.migrations
+    container_name: bingo-web-migrations
+    restart: unless-stopped
+    env_file: .env    
+    ports:
+      - '5000:80'
+    networks:
+      - app-network
 
 volumes:
   bingo-dbdata:

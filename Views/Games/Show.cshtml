@@ -14,9 +14,19 @@
 <div style="padding-top: 40px">
     @if (Model.Numbers != null)
     {
+        int i = 0;
         foreach (var number in Model.Numbers.OrderBy(c => c.DrawTime))
         {
-            <span style="border: 3px solid black; font-size: 42pt; padding: 8px; margin-top: 15px; display: inline-block">@number.Number</span>
+            <span style="border: 3px solid black; font-size: 42pt; padding: 8px; margin-top: 15px; display: inline-block">
+                @if (i == 7)
+                {
+                    <div>
+                        <img src="/img/heebie-small.jpg"/>
+                    </div>
+                }
+                @number.Number.GetBingoNumber()-@number.Number
+            </span>
+            i++;
         }
     }
 </div>
